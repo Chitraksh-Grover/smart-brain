@@ -1,10 +1,16 @@
 import React , { Component } from 'react';
+import Clarifai from 'clarifai';
 import './App.css';
 import Navigation from './Components/Navigation/Navigation';
 import Logo from './Components/Logo/Logo';
 import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import Rank from './Components/Rank/Rank';
+import FaceRecognition from './Components/FaceRecognition/FaceRecognition';
 import Particles from 'react-particles-js';
+
+const app = new Clarifai.App({
+ apiKey: '6deac09f00e74fdfb42b0570f472f5d8'
+});
 
 const options = {
 	    "particles": {
@@ -31,6 +37,15 @@ class App extends Component{
 
 	onButtonSubmit = () => {
 		console.log('click');
+		app.models.predict(Clarifai.COLOR_MODEL, "https://samples.clarifai.com/face-det.jpg")
+		.then(
+   			 function(response) {
+     				console.log(response); // do something with response
+   			 },
+   			 function(err) {
+     				 // there was an error
+   			 }
+ 		 );
 	}
 	
 	render(){
@@ -41,7 +56,7 @@ class App extends Component{
 				<Logo/>
 				<Rank/>
 				<ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
-		{/*		<FaceRecognition/>*/}	
+				<FaceRecognition/>	
 			</div>
 		);
 	}

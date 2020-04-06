@@ -6,6 +6,7 @@ import Logo from './Components/Logo/Logo';
 import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import Rank from './Components/Rank/Rank';
 import FaceRecognition from './Components/FaceRecognition/FaceRecognition';
+import Register from './Components/Register/Register';
 import Signin from './Components/Signin/Signin';
 import Particles from 'react-particles-js';
 
@@ -32,6 +33,7 @@ class App extends Component{
 			imageUrl: '',
 			box:'',
 			route:'signin',
+			IsSigned:false,
 		}
 	}
 
@@ -65,21 +67,31 @@ class App extends Component{
 
 	onRouteChange = (route) => {
 		this.setState({route:route});
+		if(route==='home')
+		{
+			this.setState({IsSigned:true});
+		}
+		else
+		{
+			this.setState({IsSigned:false});
+		}
 	}	
 	
 	render(){
 		return(
 			<div className="App">
 				<Particles className = 'particle' params = {options}/>
-				<Navigation onRouteChange={this.onRouteChange}/>
-				{this.state.route==='signin'?
-				<Signin onRouteChange={this.onRouteChange}/>:
+				<Navigation IsSigned={this.state.IsSigned} onRouteChange={this.onRouteChange}/>
+				{this.state.route==='home'?
 				<div>
 					<Logo/>
 					<Rank/>
 					<ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
 					<FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box}/>	
-				</div>}
+				</div>:(
+				this.state.route==='signin'?
+				<Signin onRouteChange={this.onRouteChange}/>:
+				<Register onRouteChange={this.onRouteChange}/>)}
 			</div>
 		);
 	}

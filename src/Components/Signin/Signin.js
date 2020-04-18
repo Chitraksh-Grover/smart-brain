@@ -11,17 +11,15 @@ class Signin extends Component {
 
 	onEmailChange = (event) => {
 		this.setState({email:event.target.value});
-		console.log(this.state.email);
 	}
 	
 	onPasswordChange = (event) => {
 		this.setState({password:event.target.value});
-		console.log(this.state.password);
 	}
 
 	signinCheck = () => {
 		//console.log(this.state);	
-		fetch('http://localhost:3000/signin', {
+		fetch('http://192.168.0.101:3000/signin', {
 		    method: 'post',
 		    headers: {
 		      'Content-Type': 'application/json',
@@ -31,8 +29,16 @@ class Signin extends Component {
 			password:this.state.password
 		   }),
 		  }).then(response => response.json())
-		.then(data => {
-			if (data === "success"){
+		.then(user => {
+			if (user.id){
+				const data = {
+					id: user.id,
+					name: user.name,
+					email: user.email,
+					entries: user.entries,
+					joined: user.joined,
+				}
+				this.props.loadUser(data);
 				this.props.onRouteChange('home');
 			}	
 		})	

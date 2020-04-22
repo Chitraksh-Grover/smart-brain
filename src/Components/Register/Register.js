@@ -24,7 +24,7 @@ class Register extends Component {
 
 	onRegister = () => {
 		console.log(this.state);	
-		fetch('http://192.168.0.101:3000/register', {
+		fetch('http://localhost:3000/register', {
 		    method: 'post',
 		    headers: {
 		      'Content-Type': 'application/json',

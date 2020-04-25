@@ -25,6 +25,21 @@ const options = {
 	    }
 }
 
+const initialState = {
+	input: '',
+	imageUrl: '',
+	box:'',
+	route:'signin',
+	IsSigned:false,
+	user: {
+		id: '',
+		name: '',
+		email: '',
+		entries: 0,
+		joined: '',
+	},
+}
+
 class App extends Component{
 	constructor(){
 		super();
@@ -76,7 +91,7 @@ class App extends Component{
 		app.models.predict(Clarifai.FACE_DETECT_MODEL,this.state.input)
 		.then(response => {
 			if(response){
-				fetch('http://localhost:3000/image', {
+				fetch('https://arcane-ridge-27667.herokuapp.com/image', {
 					method: 'put',
 					headers: {
 						'Content-Type': 'application/json',
@@ -102,7 +117,9 @@ class App extends Component{
 		}
 		else
 		{
-			this.setState({IsSigned:false});
+				
+			this.setState(initialState);
+			this.setState({route:route});
 		}
 	}	
 	

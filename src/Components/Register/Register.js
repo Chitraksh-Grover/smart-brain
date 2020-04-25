@@ -24,7 +24,7 @@ class Register extends Component {
 
 	onRegister = () => {
 		console.log(this.state);	
-		fetch('http://localhost:3000/register', {
+		fetch('https://arcane-ridge-27667.herokuapp.com/register', {
 		    method: 'post',
 		    headers: {
 		      'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ class Register extends Component {
 		   }),
 		  }).then(response => response.json())
 		.then(user => {
-			if (user){
+			if (user.id){
 				const data = {
 					id: user.id,
 					name: user.name,
